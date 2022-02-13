@@ -1,5 +1,5 @@
 # Learning - Software Architecture
 
-:us: Studies of Clean Code, Refactoring, TDD, OO, DDD, Clean Architecture, SOLID and Design
+:us: Project part of the Rodrigo Branas' course. Studies of Clean Code, Refactoring, TDD, OO, DDD, Clean Architecture, SOLID and Design.
 
-:brazil: Estudos de Clean Code, Refactoring, TDD, OO, DDD, Clean Architecture, SOLID e Design
+:brazil: Projeto parte do curso do Rodrigo Branas. Estudos de Clean Code, Refactoring, TDD, OO, DDD, Clean Architecture, SOLID e Design.
