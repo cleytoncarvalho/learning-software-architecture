@@ -1,16 +1,16 @@
-export interface ProductProps {
-  description: string;
+export interface OrderItemProps {
+  itemId: number;
   price: number;
   quantity: number;
 }
 
-export class Product {
-  readonly description: string;
+export class OrderItem {
+  readonly itemId: number;
   readonly price: number;
   readonly quantity: number;
 
-  constructor(props: ProductProps) {
-    this.description = props.description;
+  constructor(props: OrderItemProps) {
+    this.itemId = props.itemId;
     this.price = props.price;
     this.quantity = props.quantity;
   }

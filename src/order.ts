@@ -1,35 +1,42 @@
-import { Cpf } from "./cpf";
-import { Product } from "./product";
+import { Coupon } from "./Coupon";
+import { Cpf } from "./Cpf";
+import { Item } from "./Item";
+import { OrderItem } from "./OrderItem";
 
 export interface OrderProps {
   cpf: string;
-  products: Product[];
-  discountPercentage?: number;
 }
 
 export class Order {
-  readonly cpf: Cpf;
-  readonly products: Product[];
-  readonly discountPercentage: number;
+  cpf: Cpf;
+  orderItems: OrderItem[] = [];
+  coupon: Coupon | undefined;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
-    this.products = props.products;
-    this.discountPercentage = props.discountPercentage || 0;
   }
 
   get subtotal(): number {
-    return this.products
-      .map((product) => product.total)
+    return this.orderItems
+      .map((orderItems) => orderItems.total)
       .reduce((partialSum, currentValue) => partialSum + currentValue);
   }
 
   get discount(): number {
-    if (!this.discountPercentage) return 0;
-    return (this.subtotal * this.discountPercentage) / 100;
+    if (!this.coupon?.percentage) return 0;
+    return (this.subtotal * this.coupon.percentage) / 100;
   }
 
   get total(): number {
     return this.subtotal - this.discount;
+  }
+
+  addItem(item: Item, quantity: number) {
+    const { itemId, price } = item;
+    this.orderItems.push(new OrderItem({ itemId, price, quantity }));
+  }
+
+  addCoupon(coupon: Coupon) {
+    this.coupon = coupon;
   }
 }
