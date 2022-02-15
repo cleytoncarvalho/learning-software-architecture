@@ -1,4 +1,5 @@
 import { Coupon } from "./Coupon";
+import { ExpiredCouponException } from "./CouponExceptions";
 import { Cpf } from "./Cpf";
 import { Item } from "./Item";
 import { OrderItem } from "./OrderItem";
@@ -37,6 +38,9 @@ export class Order {
   }
 
   addCoupon(coupon: Coupon) {
+    const currentDate = new Date();
+    if (currentDate.getTime() > coupon.expirationDate.getTime())
+      throw new ExpiredCouponException();
     this.coupon = coupon;
   }
 }
