@@ -17,6 +17,6 @@ test("cant create cpf when digits are all equal", () => {
 });
 
 test("create cpf", () => {
-  const cpf = Cpf.create("283.089.509-65");
-  expect(cpf.value).toBe("283.089.509-65");
+  const cpf = Cpf.create("516.178.806-20");
+  expect(cpf.value).toBe("516.178.806-20");
 });
