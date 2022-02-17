@@ -25,12 +25,13 @@ export class Order {
 
   get shipping(): number {
     const distance = 1000;
+    const minimumShippingPrice = 10;
     let shippingPrice = 0;
     for (const item of this.orderItems) {
       shippingPrice +=
         item.quantity * (distance * item.volume * (item.density / 100));
     }
-    if (shippingPrice < 10) shippingPrice = 10;
+    if (shippingPrice < minimumShippingPrice) return minimumShippingPrice;
     return shippingPrice;
   }
 
