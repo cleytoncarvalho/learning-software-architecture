@@ -52,9 +52,7 @@ export class Order {
   }
 
   addCoupon(coupon: Coupon) {
-    const currentDate = new Date();
-    if (currentDate.getTime() > coupon.expirationDate.getTime())
-      throw new ExpiredCouponException();
+    if (coupon.expired) throw new ExpiredCouponException();
     this.coupon = coupon;
   }
 }
