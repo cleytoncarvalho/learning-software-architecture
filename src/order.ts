@@ -23,18 +23,31 @@ export class Order {
       .reduce((partialSum, currentValue) => partialSum + currentValue);
   }
 
+  get shipping(): number {
+    const distance = 1000;
+    let shippingPrice = 0;
+    for (const item of this.orderItems) {
+      shippingPrice +=
+        item.quantity * (distance * item.volume * (item.density / 100));
+    }
+    if (shippingPrice < 10) shippingPrice = 10;
+    return shippingPrice;
+  }
+
   get discount(): number {
     if (!this.coupon?.percentage) return 0;
     return (this.subtotal * this.coupon.percentage) / 100;
   }
 
   get total(): number {
-    return this.subtotal - this.discount;
+    return this.subtotal + this.shipping - this.discount;
   }
 
   addItem(item: Item, quantity: number) {
-    const { itemId, price } = item;
-    this.orderItems.push(new OrderItem({ itemId, price, quantity }));
+    const { itemId, price, volume, density } = item;
+    this.orderItems.push(
+      new OrderItem({ itemId, price, quantity, volume, density })
+    );
   }
 
   addCoupon(coupon: Coupon) {

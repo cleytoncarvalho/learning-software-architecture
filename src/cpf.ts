@@ -1,7 +1,7 @@
 import { InvalidCpfException } from "./CpfExceptions";
 
 export class Cpf {
-  private cpf: string;
+  private readonly cpf: string;
   private normalizedCpf: string = "";
 
   get value(): string {
