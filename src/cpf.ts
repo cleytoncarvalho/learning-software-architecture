@@ -1,52 +1,46 @@
-import { InvalidCpfException } from "./CpfExceptions";
+import { CpfException, CpfExceptionType } from "./CpfExceptions";
 
 export class Cpf {
-  private readonly cpf: string;
-  private normalizedCpf: string = "";
-
-  get value(): string {
-    return this.cpf;
-  }
+  readonly value: string;
 
   private constructor(cpf: string) {
-    this.cpf = cpf;
-    this.normalizeCpf();
-    if (!this.validateCpf()) throw new InvalidCpfException();
+    this.value = cpf;
   }
 
   static create(cpf: string): Cpf {
+    this.validate(cpf);
     return new Cpf(cpf);
   }
 
-  private normalizeCpf() {
-    this.normalizedCpf = this.cpf.replace(/[\.\-]/g, "");
+  private static validate(cpf: string) {
+    cpf = this.normalize(cpf);
+    if (cpf.length != 11)
+      throw new CpfException(CpfExceptionType.INVALID_LENGTH);
+    if (this.areAllDigitsEqual(cpf))
+      throw new CpfException(CpfExceptionType.ALL_DIGITS_EQUAL);
+    if (!this.isCpfValid(cpf))
+      throw new CpfException(CpfExceptionType.INVALID_CPF);
   }
 
-  private validateCpf(): boolean {
-    if (!this.normalizedCpf) return false;
-    if (this.isCpfLengthValid()) return false;
-    if (this.areAllCpfDigitsEqual()) return false;
-    return this.calculateValidCpf() === this.normalizedCpf;
+  private static normalize(cpf: string): string {
+    return cpf.replace(/[\.\-]/g, "");
   }
 
-  private isCpfLengthValid(): boolean {
-    return this.normalizedCpf.length != 11;
+  private static areAllDigitsEqual(cpf: string): boolean {
+    const [firstDigit] = cpf[0];
+    return [...cpf].every((digit) => digit === firstDigit);
   }
 
-  private areAllCpfDigitsEqual(): boolean {
-    const [firstDigit] = this.normalizedCpf[0];
-    return [...this.normalizedCpf].every((digit) => digit === firstDigit);
-  }
-
-  private calculateValidCpf(): string {
-    const firstNineDigits = this.normalizedCpf.slice(0, 9);
-    const verifyingDigitOne = this.calculateCpfVerifyingDigit(firstNineDigits);
+  private static isCpfValid(cpf: string): boolean {
+    const firstNineDigits = cpf.slice(0, 9);
+    const verifyingDigitOne = this.calculateVerifyingDigit(firstNineDigits);
     const firstTenDigits = `${firstNineDigits}${verifyingDigitOne}`;
-    const verifyingDigitTwo = this.calculateCpfVerifyingDigit(firstTenDigits);
-    return `${firstTenDigits}${verifyingDigitTwo}`;
+    const verifyingDigitTwo = this.calculateVerifyingDigit(firstTenDigits);
+    const calculatedCpf = `${firstTenDigits}${verifyingDigitTwo}`;
+    return cpf === calculatedCpf;
   }
 
-  private calculateCpfVerifyingDigit(digits: string): string {
+  private static calculateVerifyingDigit(digits: string): string {
     let multiplier = digits.length + 1;
     const sum = [...digits]
       .map((digit) => +digit * multiplier--)

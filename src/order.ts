@@ -1,5 +1,5 @@
 import { Coupon } from "./Coupon";
-import { ExpiredCouponException } from "./CouponExceptions";
+import { CouponException, CouponExceptionType } from "./CouponExceptions";
 import { Cpf } from "./Cpf";
 import { Item } from "./Item";
 import { OrderItem } from "./OrderItem";
@@ -52,7 +52,8 @@ export class Order {
   }
 
   addCoupon(coupon: Coupon) {
-    if (coupon.expired) throw new ExpiredCouponException();
+    if (coupon.expired)
+      throw new CouponException(CouponExceptionType.COUPON_EXPIRED);
     this.coupon = coupon;
   }
 }

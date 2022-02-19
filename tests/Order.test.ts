@@ -1,13 +1,11 @@
 import { Order } from "../src/Order";
 import { Item } from "../src/Item";
 import { Coupon } from "../src/Coupon";
-import { InvalidCpfException } from "../src/CpfExceptions";
-import { ExpiredCouponException } from "../src/CouponExceptions";
+import { CpfException } from "../src/CpfExceptions";
+import { CouponException, CouponExceptionType } from "../src/CouponExceptions";
 
 test("cant create order with invalid cpf", () => {
-  expect(() => new Order({ cpf: "111.111.111-11" })).toThrowError(
-    InvalidCpfException
-  );
+  expect(() => new Order({ cpf: "111.111.111-11" })).toThrowError(CpfException);
 });
 
 test("create order with 3 items", () => {
@@ -44,7 +42,7 @@ test("cant add expired dicount coupon", () => {
         expirationDate: new Date(2022, 1, 14),
       })
     )
-  ).toThrowError(ExpiredCouponException);
+  ).toThrowError(new CouponException(CouponExceptionType.COUPON_EXPIRED));
 });
 
 test("calculate shipping price", () => {
