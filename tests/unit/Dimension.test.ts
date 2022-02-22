@@ -1,4 +1,4 @@
-import { Dimension } from "../src/Dimension";
+import { Dimension } from "../../src/domain/entities/Dimension";
 
 test("create dimension and calculate volume", () => {
   const dimension = new Dimension({ height: 20, width: 15, depth: 10 });

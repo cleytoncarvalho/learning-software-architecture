@@ -1,8 +1,11 @@
-import { Order, OrderProps } from "../src/Order";
-import { Item, ItemProps } from "../src/Item";
-import { Coupon } from "../src/Coupon";
-import { CpfException } from "../src/CpfExceptions";
-import { CouponException, CouponExceptionType } from "../src/CouponExceptions";
+import { Order, OrderProps } from "../../src/domain/entities/Order";
+import { Item, ItemProps } from "../../src/domain/entities/Item";
+import { Coupon } from "../../src/domain/entities/Coupon";
+import { CpfException } from "../../src/domain/entities/CpfExceptions";
+import {
+  CouponException,
+  CouponExceptionType,
+} from "../../src/domain/entities/CouponExceptions";
 
 interface SutOutput {
   order: Order;

@@ -3,6 +3,7 @@ import { CouponException, CouponExceptionType } from "./CouponExceptions";
 import { Cpf } from "./Cpf";
 import { Item } from "./Item";
 import { OrderItem } from "./OrderItem";
+import { Freight } from "./Freight";
 
 export interface OrderProps {
   cpf: string;
@@ -14,10 +15,12 @@ export class Order {
   orderItems: OrderItem[] = [];
   coupon: Coupon | undefined;
   readonly issueDate: Date;
+  readonly freight: Freight;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
     this.issueDate = props.issueDate;
+    this.freight = new Freight();
   }
 
   get subtotal(): number {
@@ -27,15 +30,7 @@ export class Order {
   }
 
   get shipping(): number {
-    const distance = 1000;
-    const minimumShippingPrice = 10;
-    let shippingPrice = 0;
-    for (const item of this.orderItems) {
-      shippingPrice +=
-        item.quantity * (distance * item.volume * (item.density / 100));
-    }
-    if (shippingPrice < minimumShippingPrice) return minimumShippingPrice;
-    return shippingPrice;
+    return this.freight.total;
   }
 
   get discount(): number {
@@ -48,6 +43,10 @@ export class Order {
   }
 
   addItem(props: { item: Item; quantity: number }) {
+    this.freight.addItem({
+      item: props.item,
+      quantity: props.quantity,
+    });
     this.orderItems.push(
       new OrderItem({
         itemId: props.item.itemId,

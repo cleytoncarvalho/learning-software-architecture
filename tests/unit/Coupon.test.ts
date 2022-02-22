@@ -1,4 +1,4 @@
-import { Coupon, CouponProps } from "../src/Coupon";
+import { Coupon, CouponProps } from "../../src/domain/entities/Coupon";
 
 test("create a coupon", () => {
   const couponProps: CouponProps = {
