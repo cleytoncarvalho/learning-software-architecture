@@ -11,6 +11,15 @@ test("create a coupon", () => {
   expect(coupon.isExpired(new Date())).toBe(false);
 });
 
+test("create a coupon and calculate discount", () => {
+  const couponProps: CouponProps = {
+    code: "PROMO10",
+    percentage: 10,
+  };
+  const coupon = new Coupon(couponProps);
+  expect(coupon.getDiscount(1000)).toBe(100);
+});
+
 test("create a coupon with expiration date", () => {
   const couponProps: CouponProps = {
     code: "PROMO10",

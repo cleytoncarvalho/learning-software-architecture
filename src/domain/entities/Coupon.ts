@@ -15,8 +15,13 @@ export class Coupon {
     this.expirationDate = props.expirationDate;
   }
 
-  isExpired(currentDate: Date) {
+  isExpired(currentDate: Date): boolean {
     if (!this.expirationDate) return false;
     return currentDate.getTime() > this.expirationDate.getTime();
+  }
+
+  getDiscount(total: number): number {
+    if (this.percentage <= 0) return 0;
+    return (total * this.percentage) / 100;
   }
 }

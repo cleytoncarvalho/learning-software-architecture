@@ -34,8 +34,8 @@ export class Order {
   }
 
   get discount(): number {
-    if (!this.coupon?.percentage) return 0;
-    return (this.subtotal * this.coupon.percentage) / 100;
+    if (!this.coupon) return 0;
+    return this.coupon.getDiscount(this.subtotal);
   }
 
   get total(): number {
