@@ -1,52 +1,69 @@
-import { Order } from "../src/Order";
+import { Order, OrderProps } from "../src/Order";
 import { Item } from "../src/Item";
 import { Coupon } from "../src/Coupon";
 import { CpfException } from "../src/CpfExceptions";
 import { CouponException, CouponExceptionType } from "../src/CouponExceptions";
 
+interface SutOutput {
+  order: Order;
+  orderProps: OrderProps;
+}
+
+const sut = (props: Partial<OrderProps> = {}): SutOutput => {
+  const orderProps: OrderProps = {
+    cpf: "283.089.509-65",
+    issueDate: new Date("2022-02-22T10:00:00"),
+    ...props,
+  };
+
+  return {
+    order: new Order(orderProps),
+    orderProps,
+  };
+};
+
 test("cant create order with invalid cpf", () => {
-  expect(() => new Order({ cpf: "111.111.111-11" })).toThrowError(CpfException);
+  expect(() => sut({ cpf: "283.089.509-61" })).toThrowError(CpfException);
 });
 
 test("create order with 3 items", () => {
-  const order = new Order({ cpf: "283.089.509-65" });
+  const order = sut().order;
   order.addItem(new Item({ itemId: 1, description: "test", price: 20 }), 2);
   order.addItem(new Item({ itemId: 2, description: "test", price: 30 }), 3);
   order.addItem(new Item({ itemId: 3, description: "test", price: 25 }), 1);
+  expect(order.cpf.value).toBe(sut().orderProps.cpf);
+  expect(order.issueDate.getTime()).toBe(sut().orderProps.issueDate.getTime());
   expect(order.orderItems).toHaveLength(3);
   expect(order.subtotal).toBe(155);
   expect(order.total).toBe(165);
 });
 
 test("create order with 3 items and discount coupon", () => {
-  const order = new Order({ cpf: "283.089.509-65" });
+  const order = sut().order;
   order.addItem(new Item({ itemId: 1, description: "test", price: 10 }), 1);
   order.addItem(new Item({ itemId: 2, description: "test", price: 20 }), 2);
   order.addItem(new Item({ itemId: 3, description: "test", price: 30 }), 1);
-  order.addCoupon(
-    new Coupon({ code: "PROMOCAO", percentage: 10, expirationDate: new Date() })
-  );
+  order.addCoupon(new Coupon({ code: "PROMOCAO", percentage: 10 }));
   expect(order.discount).toBe(8);
   expect(order.subtotal).toBe(80);
   expect(order.total).toBe(82);
 });
 
 test("cant add expired dicount coupon", () => {
-  const order = new Order({ cpf: "283.089.509-65" });
+  const order = sut().order;
   order.addItem(new Item({ itemId: 1, description: "test", price: 10 }), 1);
-  expect(() =>
-    order.addCoupon(
-      new Coupon({
-        code: "PROMOCAO",
-        percentage: 10,
-        expirationDate: new Date(2022, 1, 14),
-      })
-    )
-  ).toThrowError(new CouponException(CouponExceptionType.COUPON_EXPIRED));
+  const coupon = new Coupon({
+    code: "PROMOCAO",
+    percentage: 10,
+    expirationDate: new Date("2022-02-21T10:00:00"),
+  });
+  expect(() => order.addCoupon(coupon)).toThrowError(
+    new CouponException(CouponExceptionType.COUPON_EXPIRED)
+  );
 });
 
 test("calculate shipping price", () => {
-  const order = new Order({ cpf: "283.089.509-65" });
+  const order = sut().order;
   order.addItem(
     new Item({
       itemId: 1,
@@ -77,7 +94,7 @@ test("calculate shipping price", () => {
 });
 
 test("minimunm shipping price is 10", () => {
-  const order = new Order({ cpf: "283.089.509-65" });
+  const order = sut().order;
   order.addItem(
     new Item({
       itemId: 1,

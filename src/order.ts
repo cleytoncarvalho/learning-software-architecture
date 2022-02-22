@@ -6,15 +6,18 @@ import { OrderItem } from "./OrderItem";
 
 export interface OrderProps {
   cpf: string;
+  issueDate: Date;
 }
 
 export class Order {
-  cpf: Cpf;
+  readonly cpf: Cpf;
   orderItems: OrderItem[] = [];
   coupon: Coupon | undefined;
+  readonly issueDate: Date;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
+    this.issueDate = props.issueDate;
   }
 
   get subtotal(): number {
@@ -52,7 +55,7 @@ export class Order {
   }
 
   addCoupon(coupon: Coupon) {
-    if (coupon.expired)
+    if (coupon.isExpired(this.issueDate))
       throw new CouponException(CouponExceptionType.COUPON_EXPIRED);
     this.coupon = coupon;
   }

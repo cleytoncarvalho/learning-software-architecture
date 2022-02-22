@@ -1,13 +1,13 @@
-interface CouponProps {
+export interface CouponProps {
   code: string;
   percentage: number;
-  expirationDate: Date;
+  expirationDate?: Date;
 }
 
 export class Coupon {
   readonly code: string;
   readonly percentage: number;
-  readonly expirationDate: Date;
+  readonly expirationDate: Date | undefined;
 
   constructor(props: CouponProps) {
     this.code = props.code;
@@ -15,8 +15,8 @@ export class Coupon {
     this.expirationDate = props.expirationDate;
   }
 
-  get expired(): boolean {
-    if (new Date().getTime() > this.expirationDate.getTime()) return true;
-    return false;
+  isExpired(currentDate: Date) {
+    if (!this.expirationDate) return false;
+    return currentDate.getTime() > this.expirationDate.getTime();
   }
 }
