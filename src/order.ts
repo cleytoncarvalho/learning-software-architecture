@@ -47,10 +47,15 @@ export class Order {
     return this.subtotal + this.shipping - this.discount;
   }
 
-  addItem(item: Item, quantity: number) {
-    const { itemId, price, volume, density } = item;
+  addItem(props: { item: Item; quantity: number }) {
     this.orderItems.push(
-      new OrderItem({ itemId, price, quantity, volume, density })
+      new OrderItem({
+        itemId: props.item.itemId,
+        price: props.item.price,
+        quantity: props.quantity,
+        volume: props.item.volume,
+        density: props.item.density,
+      })
     );
   }
 

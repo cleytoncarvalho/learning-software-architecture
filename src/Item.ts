@@ -1,3 +1,6 @@
+import { Dimension } from "./Dimension";
+import { Matter } from "./Matter";
+
 export interface ItemProps {
   itemId: number;
   description: string;
@@ -16,6 +19,8 @@ export class Item {
   readonly width: number;
   readonly depth: number;
   readonly weight: number;
+  private readonly dimension: Dimension;
+  private readonly matter: Matter;
 
   constructor(props: ItemProps) {
     this.itemId = props.itemId;
@@ -25,18 +30,22 @@ export class Item {
     this.width = props.width || 0;
     this.depth = props.depth || 0;
     this.weight = props.weight || 0;
+    this.dimension = new Dimension({
+      height: this.height,
+      width: this.width,
+      depth: this.depth,
+    });
+    this.matter = new Matter({
+      mass: this.weight,
+      volume: this.dimension.volume,
+    });
   }
 
-  get volume(): number {
-    if (!this.height) return 0;
-    if (!this.width) return 0;
-    if (!this.depth) return 0;
-    return (this.height * this.width * this.depth) / (100 * 100 * 100);
+  get volume() {
+    return this.dimension.volume;
   }
 
-  get density(): number {
-    if (!this.weight) return 0;
-    if (!this.volume) return 0;
-    return Math.round(this.weight / this.volume);
+  get density() {
+    return this.matter.density;
   }
 }
