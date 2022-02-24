@@ -16,15 +16,15 @@ export interface OrderProps {
 
 export class Order {
   readonly cpf: Cpf;
-  orderItems: OrderItem[] = [];
-  coupon: Coupon | undefined;
+  readonly orderItems: OrderItem[];
   readonly issueDate: Date;
   readonly lastOrderId: number;
-
+  private coupon: Coupon | undefined;
   private readonly freight: Freight;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
+    this.orderItems = [];
     this.issueDate = props.issueDate;
     this.lastOrderId = props.lastOrderId || 0;
     this.freight = new Freight();
