@@ -7,15 +7,11 @@ import {
   CouponExceptionType,
 } from "../coupon/CouponExceptions";
 
-interface SutOutput {
-  order: Order;
-  orderProps: OrderProps;
-}
-
-const sut = (props: Partial<OrderProps> = {}): SutOutput => {
+const sut = (props: Partial<OrderProps> = {}) => {
   const orderProps: OrderProps = {
     cpf: "283.089.509-65",
     issueDate: new Date("2022-02-22T10:00:00"),
+    code: "202200000001",
     ...props,
   };
 
@@ -34,18 +30,24 @@ test("cant create order with invalid cpf", () => {
 });
 
 test("create order with 3 items", () => {
-  const order = sut().order;
+  const { order, orderProps } = sut();
   order.addItem({
     item: itemFactory({ price: 20 }),
     quantity: 2,
   });
   order.addItem({ item: itemFactory({ price: 30 }), quantity: 3 });
   order.addItem({ item: itemFactory({ price: 25 }), quantity: 1 });
-  expect(order.cpf.value).toBe(sut().orderProps.cpf);
-  expect(order.issueDate.getTime()).toBe(sut().orderProps.issueDate.getTime());
+  expect(order.cpf.value).toBe(orderProps.cpf);
+  expect(order.issueDate.getTime()).toBe(orderProps.issueDate.getTime());
   expect(order.orderItems).toHaveLength(3);
   expect(order.subtotal).toBe(155);
   expect(order.total).toBe(165);
+});
+
+test("create order with code", () => {
+  const { order, orderProps } = sut();
+  order.addItem({ item: itemFactory({ price: 30 }), quantity: 3 });
+  expect(order.code).toBe(orderProps.code);
 });
 
 test("create order with 3 items and discount coupon", () => {

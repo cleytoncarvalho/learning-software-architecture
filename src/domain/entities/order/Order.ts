@@ -11,6 +11,7 @@ import { OrderItem } from "./OrderItem";
 export interface OrderProps {
   cpf: string;
   issueDate: Date;
+  code: string;
 }
 
 export class Order {
@@ -18,11 +19,13 @@ export class Order {
   orderItems: OrderItem[] = [];
   coupon: Coupon | undefined;
   readonly issueDate: Date;
-  readonly freight: Freight;
+  readonly code: string;
+  private readonly freight: Freight;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
     this.issueDate = props.issueDate;
+    this.code = props.code;
     this.freight = new Freight();
   }
 

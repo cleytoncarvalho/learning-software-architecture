@@ -13,7 +13,7 @@ export class Freight {
     }
     const minimumResult = 10;
     if (result < minimumResult) return minimumResult;
-    return result;
+    return parseFloat(Number(result).toFixed(2));
   }
 
   addItem(props: { item: Item; quantity: number }) {
