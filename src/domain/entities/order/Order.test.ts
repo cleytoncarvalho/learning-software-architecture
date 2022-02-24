@@ -11,7 +11,6 @@ const sut = (props: Partial<OrderProps> = {}) => {
   const orderProps: OrderProps = {
     cpf: "283.089.509-65",
     issueDate: new Date("2022-02-22T10:00:00"),
-    code: "202200000001",
     ...props,
   };
 
@@ -44,10 +43,13 @@ test("create order with 3 items", () => {
   expect(order.total).toBe(165);
 });
 
-test("create order with code", () => {
-  const { order, orderProps } = sut();
+test("create order code with year and sequencial number", () => {
+  const { order } = sut({
+    issueDate: new Date("2021-01-01T10:00:00"),
+    lastOrderId: 3,
+  });
   order.addItem({ item: itemFactory({ price: 30 }), quantity: 3 });
-  expect(order.code).toBe(orderProps.code);
+  expect(order.code).toBe("202100000004");
 });
 
 test("create order with 3 items and discount coupon", () => {

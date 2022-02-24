@@ -14,7 +14,6 @@ export class PlaceOrder {
 
   execute(input: PlaceOrderInput): PlaceOrderOutput {
     const order = new Order({
-      code: "123",
       cpf: input.cpf,
       issueDate: new Date(),
     });

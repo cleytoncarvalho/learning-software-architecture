@@ -11,7 +11,7 @@ import { OrderItem } from "./OrderItem";
 export interface OrderProps {
   cpf: string;
   issueDate: Date;
-  code: string;
+  lastOrderId?: number;
 }
 
 export class Order {
@@ -19,14 +19,21 @@ export class Order {
   orderItems: OrderItem[] = [];
   coupon: Coupon | undefined;
   readonly issueDate: Date;
-  readonly code: string;
+  readonly lastOrderId: number;
+
   private readonly freight: Freight;
 
   constructor(props: OrderProps) {
     this.cpf = Cpf.create(props.cpf);
     this.issueDate = props.issueDate;
-    this.code = props.code;
+    this.lastOrderId = props.lastOrderId || 0;
     this.freight = new Freight();
+  }
+
+  get code(): string {
+    const year = this.issueDate.getFullYear();
+    const sequencial = `${this.lastOrderId + 1}`.padStart(8, "0");
+    return `${year}${sequencial}`;
   }
 
   get subtotal(): number {
