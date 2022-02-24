@@ -1,9 +1,12 @@
-import { Coupon } from "./Coupon";
-import { CouponException, CouponExceptionType } from "./CouponExceptions";
-import { Cpf } from "./Cpf";
-import { Item } from "./Item";
+import { Coupon } from "../coupon/Coupon";
+import {
+  CouponException,
+  CouponExceptionType,
+} from "../coupon/CouponExceptions";
+import { Cpf } from "../../values/cpf/Cpf";
+import { Item } from "../item/Item";
+import { Freight } from "../freight/Freight";
 import { OrderItem } from "./OrderItem";
-import { Freight } from "./Freight";
 
 export interface OrderProps {
   cpf: string;

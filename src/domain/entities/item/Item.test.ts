@@ -1,4 +1,4 @@
-import { Item } from "../../src/domain/entities/Item";
+import { Item } from "./Item";
 
 test("create item", () => {
   const item = new Item({ itemId: 1, description: "test", price: 20 });

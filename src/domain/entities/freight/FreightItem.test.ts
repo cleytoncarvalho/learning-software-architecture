@@ -1,4 +1,4 @@
-import { FreightItem } from "../../src/domain/entities/FreightItem";
+import { FreightItem } from "./FreightItem";
 
 test("create freight item", () => {
   const orderItem = new FreightItem({

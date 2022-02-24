@@ -1,5 +1,5 @@
-import { Freight } from "../../src/domain/entities/Freight";
-import { Item } from "../../src/domain/entities/Item";
+import { Freight } from "./Freight";
+import { Item } from "../item/Item";
 
 test("create freight and calculate total", () => {
   const freight = new Freight();

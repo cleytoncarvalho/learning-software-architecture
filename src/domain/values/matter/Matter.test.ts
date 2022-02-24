@@ -1,4 +1,4 @@
-import { Matter } from "../../src/domain/entities/Matter";
+import { Matter } from "./Matter";
 
 test("create matter and calculate density", () => {
   const matter = new Matter({ mass: 1, volume: 0.003 });

@@ -1,4 +1,4 @@
-import { Item } from "./Item";
+import { Item } from "../item/Item";
 import { FreightItem } from "./FreightItem";
 
 export class Freight {

@@ -1,8 +1,5 @@
-import { Cpf } from "../../src/domain/entities/Cpf";
-import {
-  CpfException,
-  CpfExceptionType,
-} from "../../src/domain/entities/CpfExceptions";
+import { Cpf } from "./Cpf";
+import { CpfException, CpfExceptionType } from "./CpfExceptions";
 
 test("create cpf", () => {
   const inputValue = "516.178.806-20";
