@@ -3,15 +3,15 @@ import { ItemRepositoryMemory } from "../../../infra/repositories/ItemRepository
 import { OrderRepositoryMemory } from "../../../infra/repositories/OrderRepositoryMemory";
 import { PlaceOrder } from "./PlaceOrder";
 
-test("place order", () => {
+const sut = () => {
   const orderRepository = new OrderRepositoryMemory();
   const itemRepository = new ItemRepositoryMemory();
   const couponRepository = new CouponRepositoryMemory();
-  const placeOrder = new PlaceOrder(
-    orderRepository,
-    itemRepository,
-    couponRepository
-  );
+  return new PlaceOrder(orderRepository, itemRepository, couponRepository);
+};
+
+test("place order", () => {
+  const placeOrder = sut();
   const output = placeOrder.execute({
     cpf: "516.178.806-20",
     orderItems: [
@@ -23,14 +23,7 @@ test("place order", () => {
 });
 
 test("place order with coupon", () => {
-  const orderRepository = new OrderRepositoryMemory();
-  const itemRepository = new ItemRepositoryMemory();
-  const couponRepository = new CouponRepositoryMemory();
-  const placeOrder = new PlaceOrder(
-    orderRepository,
-    itemRepository,
-    couponRepository
-  );
+  const placeOrder = sut();
   const output = placeOrder.execute({
     cpf: "516.178.806-20",
     orderItems: [

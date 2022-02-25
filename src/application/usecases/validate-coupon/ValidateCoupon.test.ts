@@ -1,9 +1,13 @@
 import { CouponRepositoryMemory } from "../../../infra/repositories/CouponRepositoryMemory";
 import { ValidateCoupon } from "./ValidateCoupon";
 
-test("validate coupon", () => {
+const sut = () => {
   const couponRepository = new CouponRepositoryMemory();
-  const validateCoupon = new ValidateCoupon(couponRepository);
+  return new ValidateCoupon(couponRepository);
+};
+
+test("validate coupon", () => {
+  const validateCoupon = sut();
   const output = validateCoupon.execute({
     code: "VALE10",
     currentDate: new Date("2022-02-20T10:00:00"),
@@ -12,8 +16,7 @@ test("validate coupon", () => {
 });
 
 test("validate coupon expired", () => {
-  const couponRepository = new CouponRepositoryMemory();
-  const validateCoupon = new ValidateCoupon(couponRepository);
+  const validateCoupon = sut();
   const output = validateCoupon.execute({
     code: "VALE30",
     currentDate: new Date("2022-02-20T10:00:00"),
@@ -22,8 +25,7 @@ test("validate coupon expired", () => {
 });
 
 test("validate coupon not found", () => {
-  const couponRepository = new CouponRepositoryMemory();
-  const validateCoupon = new ValidateCoupon(couponRepository);
+  const validateCoupon = sut();
   const output = validateCoupon.execute({
     code: "VALE40",
     currentDate: new Date("2022-02-20T10:00:00"),
