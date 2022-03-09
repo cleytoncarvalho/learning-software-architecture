@@ -1,4 +1,4 @@
-import { ItemRepository } from "../../application/repositories/ItemRepository";
+import { ItemRepository } from "../../domain/repositories/ItemRepository";
 import { Item } from "../../domain/entities/item/Item";
 
 export class ItemRepositoryMemory implements ItemRepository {

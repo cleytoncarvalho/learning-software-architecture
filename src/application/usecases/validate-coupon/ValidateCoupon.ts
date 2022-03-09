@@ -1,4 +1,4 @@
-import { CouponRepository } from "../../repositories/CouponRepository";
+import { CouponRepository } from "../../../domain/repositories/CouponRepository";
 import { ValidateCouponInput } from "./ValidateCouponInput";
 import { ValidateCouponOutput } from "./ValidateCouponOutput";
 

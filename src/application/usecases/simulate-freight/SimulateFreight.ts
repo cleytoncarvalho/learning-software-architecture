@@ -1,5 +1,5 @@
 import { Freight } from "../../../domain/entities/freight/Freight";
-import { ItemRepository } from "../../repositories/ItemRepository";
+import { ItemRepository } from "../../../domain/repositories/ItemRepository";
 import { SimulateFreightInput } from "./SimulateFreightInput";
 import { SimulateFreightOutput } from "./SimulateFreightOutput";
 

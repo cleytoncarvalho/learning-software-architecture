@@ -1,4 +1,4 @@
-import { Item } from "../../domain/entities/item/Item";
+import { Item } from "../entities/item/Item";
 
 export interface ItemRepository {
   getById(itemId: number): Item | undefined;

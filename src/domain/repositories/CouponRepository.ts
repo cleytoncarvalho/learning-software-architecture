@@ -1,4 +1,4 @@
-import { Coupon } from "../../domain/entities/coupon/Coupon";
+import { Coupon } from "../entities/coupon/Coupon";
 
 export interface CouponRepository {
   getByCode(code: string): Coupon | undefined;
