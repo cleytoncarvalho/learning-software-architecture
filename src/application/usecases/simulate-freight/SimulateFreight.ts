@@ -9,9 +9,9 @@ export class SimulateFreight {
   execute(input: SimulateFreightInput): SimulateFreightOutput {
     const freight = new Freight();
 
-    for (const freightItem of input.freightItems) {
-      const item = this.itemRepository.getById(freightItem.itemId);
-      if (item) freight.addItem({ item, quantity: freightItem.quantity });
+    for (const orderItem of input.orderItems) {
+      const item = this.itemRepository.getById(orderItem.itemId);
+      if (item) freight.addItem({ item, quantity: orderItem.quantity });
     }
 
     return {

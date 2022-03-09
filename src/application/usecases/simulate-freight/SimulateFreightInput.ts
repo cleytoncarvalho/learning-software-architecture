@@ -1,11 +1,11 @@
 interface SimulateFreightInputProps {
-  freightItems: { itemId: number; quantity: number }[];
+  orderItems: { itemId: number; quantity: number }[];
 }
 
 export class SimulateFreightInput {
-  readonly freightItems: { itemId: number; quantity: number }[];
+  readonly orderItems: { itemId: number; quantity: number }[];
 
   constructor(props: SimulateFreightInputProps) {
-    this.freightItems = props.freightItems;
+    this.orderItems = props.orderItems;
   }
 }

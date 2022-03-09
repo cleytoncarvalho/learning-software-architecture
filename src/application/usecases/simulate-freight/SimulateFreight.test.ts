@@ -5,7 +5,7 @@ test("simulate freight", () => {
   const itemRepository = new ItemRepositoryMemory();
   const simulateFreight = new SimulateFreight(itemRepository);
   const output = simulateFreight.execute({
-    freightItems: [
+    orderItems: [
       { itemId: 1, quantity: 1 },
       { itemId: 2, quantity: 2 },
     ],

@@ -1,28 +1,24 @@
 import { Item } from "../item/Item";
-import { FreightItem } from "./FreightItem";
 
 export class Freight {
-  freightItems: FreightItem[] = [];
-  private readonly DISTANCE = 1000;
+  private _total: number;
+  private DISTANCE = 1000;
 
-  get total(): number {
-    let result = 0;
-    for (const item of this.freightItems) {
-      result +=
-        item.quantity * (this.DISTANCE * item.volume * (item.density / 100));
-    }
-    const minimumResult = 10;
-    if (result < minimumResult) return minimumResult;
-    return parseFloat(Number(result).toFixed(2));
+  constructor() {
+    this._total = 0;
   }
 
   addItem(props: { item: Item; quantity: number }) {
-    this.freightItems.push(
-      new FreightItem({
-        volume: props.item.volume,
-        density: props.item.density,
-        quantity: props.quantity,
-      })
-    );
+    const result =
+      props.item.volume *
+      this.DISTANCE *
+      (props.item.density / 100) *
+      props.quantity;
+    this._total += parseFloat(Number(result).toFixed(2));
+  }
+
+  get total() {
+    if (this._total < 10) return 10;
+    return this._total;
   }
 }
