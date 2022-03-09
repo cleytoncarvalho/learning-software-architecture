@@ -3,7 +3,7 @@ import {
   CouponException,
   CouponExceptionType,
 } from "../coupon/CouponExceptions";
-import { Cpf } from "../../values/cpf/Cpf";
+import { Cpf } from "../cpf/Cpf";
 import { Item } from "../item/Item";
 import { Freight } from "../freight/Freight";
 import { OrderItem } from "./OrderItem";

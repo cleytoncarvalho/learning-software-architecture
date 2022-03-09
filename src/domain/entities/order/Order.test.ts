@@ -1,7 +1,7 @@
 import { Order, OrderProps } from "./Order";
 import { Item, ItemProps } from "../item/Item";
 import { Coupon } from "../coupon/Coupon";
-import { CpfException } from "../../values/cpf/CpfExceptions";
+import { CpfException } from "../cpf/CpfExceptions";
 import {
   CouponException,
   CouponExceptionType,

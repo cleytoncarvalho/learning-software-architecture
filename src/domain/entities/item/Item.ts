@@ -1,5 +1,5 @@
-import { Dimension } from "../../values/dimension/Dimension";
-import { Matter } from "../../values/matter/Matter";
+import { Dimension } from "../dimension/Dimension";
+import { Matter } from "../matter/Matter";
 
 export interface ItemProps {
   itemId: number;
