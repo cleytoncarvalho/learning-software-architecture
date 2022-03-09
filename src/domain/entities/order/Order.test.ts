@@ -46,10 +46,10 @@ test("create order with 3 items", () => {
 test("create order code with year and sequencial number", () => {
   const { order } = sut({
     issueDate: new Date("2021-01-01T10:00:00"),
-    lastOrderId: 3,
+    sequence: 3,
   });
   order.addItem({ item: itemFactory({ price: 30 }), quantity: 3 });
-  expect(order.code).toBe("202100000004");
+  expect(order.code.value).toBe("202100000003");
 });
 
 test("create order with 3 items and discount coupon", () => {

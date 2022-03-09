@@ -13,9 +13,11 @@ export class PlaceOrder {
   ) {}
 
   execute(input: PlaceOrderInput): PlaceOrderOutput {
+    const sequence = this.orderRepository.count() + 1;
     const order = new Order({
       cpf: input.cpf,
-      issueDate: new Date(),
+      issueDate: input.issueDate,
+      sequence,
     });
 
     for (const orderItem of input.orderItems) {
@@ -33,6 +35,7 @@ export class PlaceOrder {
     this.orderRepository.save(order);
 
     return {
+      code: order.code.value,
       total: order.total,
     };
   }

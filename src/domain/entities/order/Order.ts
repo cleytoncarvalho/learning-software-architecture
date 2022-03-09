@@ -7,33 +7,28 @@ import { Cpf } from "../../values/cpf/Cpf";
 import { Item } from "../item/Item";
 import { Freight } from "../freight/Freight";
 import { OrderItem } from "./OrderItem";
+import { OrderCode } from "./OrderCode";
 
 export interface OrderProps {
   cpf: string;
   issueDate: Date;
-  lastOrderId?: number;
+  sequence?: number;
 }
 
 export class Order {
+  readonly code: OrderCode;
   readonly cpf: Cpf;
   readonly orderItems: OrderItem[];
   readonly issueDate: Date;
-  readonly lastOrderId: number;
   private coupon: Coupon | undefined;
   private readonly freight: Freight;
 
   constructor(props: OrderProps) {
+    this.code = OrderCode.create(props.issueDate, props.sequence);
     this.cpf = Cpf.create(props.cpf);
     this.orderItems = [];
     this.issueDate = props.issueDate;
-    this.lastOrderId = props.lastOrderId || 0;
     this.freight = new Freight();
-  }
-
-  get code(): string {
-    const year = this.issueDate.getFullYear();
-    const sequencial = `${this.lastOrderId + 1}`.padStart(8, "0");
-    return `${year}${sequencial}`;
   }
 
   get subtotal(): number {
