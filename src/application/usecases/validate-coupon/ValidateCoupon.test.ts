@@ -6,27 +6,27 @@ const sut = () => {
   return new ValidateCoupon(couponRepository);
 };
 
-test("validate coupon", () => {
+test("validate coupon", async () => {
   const validateCoupon = sut();
-  const output = validateCoupon.execute({
+  const output = await validateCoupon.execute({
     code: "VALE10",
     currentDate: new Date("2022-02-20T10:00:00"),
   });
   expect(output.isValid).toBe(true);
 });
 
-test("validate coupon expired", () => {
+test("validate coupon expired", async () => {
   const validateCoupon = sut();
-  const output = validateCoupon.execute({
+  const output = await validateCoupon.execute({
     code: "VALE30",
     currentDate: new Date("2022-02-20T10:00:00"),
   });
   expect(output.isValid).toBe(false);
 });
 
-test("validate coupon not found", () => {
+test("validate coupon not found", async () => {
   const validateCoupon = sut();
-  const output = validateCoupon.execute({
+  const output = await validateCoupon.execute({
     code: "VALE40",
     currentDate: new Date("2022-02-20T10:00:00"),
   });

@@ -6,16 +6,16 @@ import { SimulateFreightOutput } from "./SimulateFreightOutput";
 export class SimulateFreight {
   constructor(readonly itemRepository: ItemRepository) {}
 
-  execute(input: SimulateFreightInput): SimulateFreightOutput {
+  async execute(input: SimulateFreightInput): Promise<SimulateFreightOutput> {
     const freight = new Freight();
 
     for (const orderItem of input.orderItems) {
-      const item = this.itemRepository.getById(orderItem.itemId);
+      const item = await this.itemRepository.getById(orderItem.itemId);
       if (item) freight.addItem({ item, quantity: orderItem.quantity });
     }
 
-    return {
+    return new SimulateFreightOutput({
       total: freight.total,
-    };
+    });
   }
 }

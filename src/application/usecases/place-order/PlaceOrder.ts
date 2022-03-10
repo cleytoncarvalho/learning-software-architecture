@@ -12,8 +12,8 @@ export class PlaceOrder {
     readonly couponRepository: CouponRepository
   ) {}
 
-  execute(input: PlaceOrderInput): PlaceOrderOutput {
-    const sequence = this.orderRepository.count() + 1;
+  async execute(input: PlaceOrderInput): Promise<PlaceOrderOutput> {
+    const sequence = (await this.orderRepository.count()) + 1;
     const order = new Order({
       cpf: input.cpf,
       issueDate: input.issueDate,
@@ -21,22 +21,22 @@ export class PlaceOrder {
     });
 
     for (const orderItem of input.orderItems) {
-      const item = this.itemRepository.getById(orderItem.itemId);
+      const item = await this.itemRepository.getById(orderItem.itemId);
       if (item) {
         order.addItem({ item, quantity: orderItem.quantity });
       }
     }
 
     if (input.coupon) {
-      const coupon = this.couponRepository.getByCode(input.coupon);
+      const coupon = await this.couponRepository.getByCode(input.coupon);
       if (coupon) order.addCoupon(coupon);
     }
 
-    this.orderRepository.save(order);
+    await this.orderRepository.save(order);
 
-    return {
+    return new PlaceOrderOutput({
       code: order.code.value,
       total: order.total,
-    };
+    });
   }
 }

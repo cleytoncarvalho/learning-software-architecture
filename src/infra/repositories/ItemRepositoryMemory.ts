@@ -36,7 +36,7 @@ export class ItemRepositoryMemory implements ItemRepository {
     ];
   }
 
-  getById(itemId: number): Item | undefined {
+  async getById(itemId: number): Promise<Item | undefined> {
     return this.items.find((item) => item.itemId === itemId);
   }
 }

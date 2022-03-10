@@ -10,9 +10,9 @@ const sut = () => {
   return new PlaceOrder(orderRepository, itemRepository, couponRepository);
 };
 
-test("place order and calculate code", () => {
+test("place order and calculate code", async () => {
   const placeOrder = sut();
-  const output = placeOrder.execute({
+  const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
     orderItems: [
@@ -24,9 +24,9 @@ test("place order and calculate code", () => {
   expect(output.code).toBe("202100000001");
 });
 
-test("place order and calculate total", () => {
+test("place order and calculate total", async () => {
   const placeOrder = sut();
-  const output = placeOrder.execute({
+  const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
     orderItems: [
@@ -37,9 +37,9 @@ test("place order and calculate total", () => {
   expect(output.total).toBe(80);
 });
 
-test("place order with coupon", () => {
+test("place order with coupon", async () => {
   const placeOrder = sut();
-  const output = placeOrder.execute({
+  const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
     orderItems: [

@@ -16,7 +16,7 @@ export class CouponRepositoryMemory implements CouponRepository {
     ];
   }
 
-  getByCode(code: string): Coupon | undefined {
+  async getByCode(code: string): Promise<Coupon | undefined> {
     return this.coupons.find((coupon) => coupon.code === code);
   }
 }

@@ -5,15 +5,15 @@ import { ValidateCouponOutput } from "./ValidateCouponOutput";
 export class ValidateCoupon {
   constructor(readonly couponRepository: CouponRepository) {}
 
-  execute(input: ValidateCouponInput): ValidateCouponOutput {
+  async execute(input: ValidateCouponInput): Promise<ValidateCouponOutput> {
     let isValid = false;
 
-    const coupon = this.couponRepository.getByCode(input.code);
+    const coupon = await this.couponRepository.getByCode(input.code);
 
     if (coupon) {
       isValid = !coupon.isExpired(input.currentDate);
     }
 
-    return { isValid };
+    return new ValidateCouponOutput({ isValid });
   }
 }
