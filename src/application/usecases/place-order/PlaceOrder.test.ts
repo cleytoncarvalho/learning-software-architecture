@@ -21,7 +21,7 @@ test("place order and calculate code", async () => {
     ],
     coupon: "VALE10",
   });
-  expect(output.code).toBe("202100000001");
+  expect(output.code).toBe("202100000002");
 });
 
 test("place order and calculate total", async () => {

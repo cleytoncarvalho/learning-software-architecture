@@ -37,5 +37,5 @@ test("count order using PostgreSQL", async () => {
   );
   const count = await orderRepositoryDatabase.count();
   postgreSQLConnectionAdapter.close();
-  expect(count).toBe(5);
+  expect(count).toBe(1);
 });
