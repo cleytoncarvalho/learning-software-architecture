@@ -20,15 +20,17 @@ export class Order {
   readonly cpf: Cpf;
   readonly orderItems: OrderItem[];
   readonly issueDate: Date;
-  private coupon: Coupon | undefined;
+  coupon: Coupon | undefined;
   private readonly freight: Freight;
+  readonly sequence: number | undefined;
 
   constructor(props: OrderProps) {
-    this.code = OrderCode.create(props.issueDate, props.sequence);
+    this.sequence = props.sequence;
     this.cpf = Cpf.create(props.cpf);
     this.orderItems = [];
     this.issueDate = props.issueDate;
     this.freight = new Freight();
+    this.code = OrderCode.create(props.issueDate, props.sequence);
   }
 
   get subtotal(): number {
