@@ -6,6 +6,6 @@ test("connect to postgreSQL database", async () => {
     "select * from ccca.item",
     []
   );
-  expect(result).toHaveLength(3);
   await postgreSQLConnectionAdapter.close();
+  expect(result).toHaveLength(3);
 });
