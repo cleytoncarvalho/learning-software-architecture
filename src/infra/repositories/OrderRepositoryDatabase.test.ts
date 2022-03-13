@@ -1,13 +1,24 @@
 import { Item } from "../../domain/entities/item/Item";
 import { Order } from "../../domain/entities/order/Order";
+import { OrderRepository } from "../../domain/repositories/OrderRepository";
 import { PostgreSQLConnectionAdapter } from "../database/adapters/PostgreSQLConnectionAdapter";
 import { OrderRepositoryDatabase } from "./OrderRepositoryDatabase";
 
-test("save order using PostgreSQL", async () => {
-  const postgreSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
-  const orderRepositoryDatabase = new OrderRepositoryDatabase(
+let postgreSQLConnectionAdapter: PostgreSQLConnectionAdapter;
+let orderRepositoryDatabase: OrderRepository;
+
+beforeEach(() => {
+  postgreSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
+  orderRepositoryDatabase = new OrderRepositoryDatabase(
     postgreSQLConnectionAdapter
   );
+});
+
+afterEach(() => {
+  postgreSQLConnectionAdapter.close();
+});
+
+test("save order using PostgreSQL", async () => {
   const order = new Order({
     cpf: "516.178.806-20",
     issueDate: new Date("2020-10-10T10:00:00"),
@@ -26,16 +37,10 @@ test("save order using PostgreSQL", async () => {
     quantity: 1,
   });
   const savedOrder = await orderRepositoryDatabase.save(order);
-  expect(savedOrder).toBeFalsy();
-  postgreSQLConnectionAdapter.close();
+  expect(savedOrder).toBeUndefined();
 });
 
 test("count order using PostgreSQL", async () => {
-  const postgreSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
-  const orderRepositoryDatabase = new OrderRepositoryDatabase(
-    postgreSQLConnectionAdapter
-  );
   const count = await orderRepositoryDatabase.count();
-  postgreSQLConnectionAdapter.close();
   expect(count).toBe(1);
 });
