@@ -10,6 +10,9 @@ export class Dimension {
   readonly depth: number;
 
   constructor(props: DimensionProps) {
+    if (props.height < 0) throw new Error("Height cant be negative");
+    if (props.width < 0) throw new Error("Width cant be negative");
+    if (props.depth < 0) throw new Error("Depth cant be negative");
     this.height = props.height;
     this.width = props.width;
     this.depth = props.depth;

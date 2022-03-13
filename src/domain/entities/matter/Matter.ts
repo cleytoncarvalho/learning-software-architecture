@@ -8,6 +8,7 @@ export class Matter {
   readonly volume: number;
 
   constructor(props: MatterProps) {
+    if (props.mass < 0) throw new Error("Mass cant be negative");
     this.mass = props.mass;
     this.volume = props.volume;
   }

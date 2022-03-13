@@ -1,3 +1,4 @@
+import { isAssertClause } from "typescript";
 import { OrderItem } from "./OrderItem";
 
 test("create order item", () => {
@@ -24,4 +25,19 @@ test("calculate order item total", () => {
     density: 0,
   });
   expect(orderItem.total).toBe(40);
+});
+
+test("order item quantity can not be negative", () => {
+  expect.assertions(1);
+  try {
+    new OrderItem({
+      itemId: 1,
+      price: 20,
+      quantity: -2,
+      volume: 0,
+      density: 0,
+    });
+  } catch (error) {
+    expect(error).toBeTruthy();
+  }
 });

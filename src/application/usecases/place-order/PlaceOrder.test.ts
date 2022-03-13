@@ -50,3 +50,20 @@ test("place order with coupon", async () => {
   });
   expect(output.total).toBe(73);
 });
+
+test("cant place order with repeated item", async () => {
+  expect.assertions(1);
+  try {
+    await sut().execute({
+      issueDate: new Date("2021-03-09T10:00:00"),
+      cpf: "516.178.806-20",
+      orderItems: [
+        { itemId: 1, quantity: 1 },
+        { itemId: 1, quantity: 2 },
+      ],
+      coupon: "VALE10",
+    });
+  } catch (error) {
+    expect(error).toBeTruthy();
+  }
+});

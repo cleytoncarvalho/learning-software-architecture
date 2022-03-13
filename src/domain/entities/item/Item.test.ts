@@ -31,3 +31,51 @@ test("create item and get density", () => {
   });
   expect(item.density).toBe(333);
 });
+
+test("item dimensions cant be negative", () => {
+  expect(
+    () =>
+      new Item({
+        itemId: 1,
+        description: "test",
+        price: 20,
+        height: -1,
+        width: 0,
+        depth: 0,
+      })
+  ).toThrow();
+  expect(
+    () =>
+      new Item({
+        itemId: 1,
+        description: "test",
+        price: 20,
+        height: 0,
+        width: -1,
+        depth: 0,
+      })
+  ).toThrow();
+  expect(
+    () =>
+      new Item({
+        itemId: 1,
+        description: "test",
+        price: 20,
+        height: 0,
+        width: 0,
+        depth: -1,
+      })
+  ).toThrow();
+});
+
+test("item weight cant be negative", () => {
+  expect(
+    () =>
+      new Item({
+        itemId: 1,
+        description: "test",
+        price: 20,
+        weight: -1,
+      })
+  ).toThrow();
+});

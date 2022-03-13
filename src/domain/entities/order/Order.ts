@@ -53,6 +53,10 @@ export class Order {
   }
 
   addItem(props: { item: Item; quantity: number }) {
+    const itemWithSameId = this.orderItems.find(
+      (item) => item.itemId === props.item.itemId
+    );
+    if (itemWithSameId) throw new Error("Cant add repeated item");
     this.freight.addItem({
       item: props.item,
       quantity: props.quantity,
