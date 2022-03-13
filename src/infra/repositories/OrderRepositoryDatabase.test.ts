@@ -44,3 +44,8 @@ test("count order using PostgreSQL", async () => {
   const count = await orderRepositoryDatabase.count();
   expect(count).toBe(1);
 });
+
+test("get order list using PostgreSQL", async () => {
+  const orders = await orderRepositoryDatabase.getList();
+  expect(orders).toHaveLength(1);
+});

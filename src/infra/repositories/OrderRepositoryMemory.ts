@@ -18,6 +18,10 @@ export class OrderRepositoryMemory implements OrderRepository {
     return this.orders.find((item) => item.code.value === code);
   }
 
+  async getList(): Promise<Order[]> {
+    return this.orders;
+  }
+
   async save(order: Order): Promise<void> {
     this.orders.push(order);
   }

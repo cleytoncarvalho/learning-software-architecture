@@ -17,6 +17,23 @@ export class OrderRepositoryDatabase implements OrderRepository {
     });
   }
 
+  async getList(): Promise<Order[]> {
+    const orders: Order[] = [];
+    const results = await this.connection.query("select * from ccca.order", []);
+
+    for (const result of results) {
+      orders.push(
+        new Order({
+          cpf: result.cpf,
+          issueDate: result.issue_date,
+          sequence: result.sequence,
+        })
+      );
+    }
+
+    return orders;
+  }
+
   async save(order: Order): Promise<void> {
     await this.connection.query(
       "insert into ccca.order (coupon,code,cpf,issue_date,freight,sequence,total) values ($1,$2,$3,$4,$5,$6,$7)",
