@@ -6,6 +6,7 @@ test("create freight and calculate total", () => {
   freight.addItem({
     item: new Item({
       itemId: 1,
+      category: "test",
       description: "test",
       price: 10,
       height: 20,
@@ -18,6 +19,7 @@ test("create freight and calculate total", () => {
   freight.addItem({
     item: new Item({
       itemId: 1,
+      category: "test",
       description: "test",
       price: 10,
       height: 100,

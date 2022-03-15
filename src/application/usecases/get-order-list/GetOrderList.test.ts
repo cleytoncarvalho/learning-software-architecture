@@ -9,6 +9,6 @@ test("get order list", async () => {
   );
   const getOrderList = new GetOrderList(orderRepositoryDatabase);
   const list = await getOrderList.execute();
-  expect(list.orders).toHaveLength(0);
+  expect(list.orders).toHaveLength(1);
   postgresSQLConnectionAdapter.close();
 });

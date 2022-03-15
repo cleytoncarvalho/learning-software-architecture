@@ -21,7 +21,13 @@ const sut = (props: Partial<OrderProps> = {}) => {
 };
 
 const itemFactory = (props: Partial<ItemProps> = {}): Item => {
-  return new Item({ itemId: 1, description: "test", price: 10, ...props });
+  return new Item({
+    itemId: 1,
+    category: "test",
+    description: "test",
+    price: 10,
+    ...props,
+  });
 };
 
 test("cant create order with invalid cpf", () => {

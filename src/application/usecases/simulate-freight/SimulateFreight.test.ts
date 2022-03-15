@@ -10,5 +10,5 @@ test("simulate freight", async () => {
       { itemId: 2, quantity: 2 },
     ],
   });
-  expect(output.total).toBe(202);
+  expect(output.total).toBe(470);
 });

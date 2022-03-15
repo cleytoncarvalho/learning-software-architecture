@@ -13,11 +13,12 @@ export class ItemRepositoryDatabase implements ItemRepository {
 
     return new Item({
       itemId: result.id_item,
+      category: result.category,
       description: result.description,
       price: parseFloat(result.price),
       width: parseInt(result.width),
       height: parseInt(result.height),
-      depth: parseInt(result.length),
+      depth: parseInt(result.depth),
       weight: parseInt(result.weight),
     });
   }

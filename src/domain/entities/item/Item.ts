@@ -3,6 +3,7 @@ import { Matter } from "../matter/Matter";
 
 export interface ItemProps {
   itemId: number;
+  category: string;
   description: string;
   price: number;
   height?: number;
@@ -13,6 +14,7 @@ export interface ItemProps {
 
 export class Item {
   readonly itemId: number;
+  readonly category: string;
   readonly description: string;
   readonly price: number;
   readonly height: number;
@@ -24,6 +26,7 @@ export class Item {
 
   constructor(props: ItemProps) {
     this.itemId = props.itemId;
+    this.category = props.category;
     this.description = props.description;
     this.price = props.price;
     this.height = props.height || 0;

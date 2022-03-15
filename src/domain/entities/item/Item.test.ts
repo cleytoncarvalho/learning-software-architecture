@@ -1,15 +1,22 @@
 import { Item } from "./Item";
 
 test("create item", () => {
-  const item = new Item({ itemId: 1, description: "test", price: 20 });
+  const item = new Item({
+    itemId: 1,
+    category: "test1",
+    description: "test2",
+    price: 20,
+  });
   expect(item.itemId).toBe(1);
-  expect(item.description).toBe("test");
+  expect(item.category).toBe("test1");
+  expect(item.description).toBe("test2");
   expect(item.price).toBe(20);
 });
 
 test("create item and get volume", () => {
   const item = new Item({
     itemId: 1,
+    category: "test",
     description: "test",
     price: 20,
     height: 20,
@@ -22,6 +29,7 @@ test("create item and get volume", () => {
 test("create item and get density", () => {
   const item = new Item({
     itemId: 1,
+    category: "test",
     description: "test",
     price: 20,
     height: 20,
@@ -37,6 +45,7 @@ test("item dimensions cant be negative", () => {
     () =>
       new Item({
         itemId: 1,
+        category: "test",
         description: "test",
         price: 20,
         height: -1,
@@ -48,6 +57,7 @@ test("item dimensions cant be negative", () => {
     () =>
       new Item({
         itemId: 1,
+        category: "test",
         description: "test",
         price: 20,
         height: 0,
@@ -59,6 +69,7 @@ test("item dimensions cant be negative", () => {
     () =>
       new Item({
         itemId: 1,
+        category: "test",
         description: "test",
         price: 20,
         height: 0,
@@ -73,6 +84,7 @@ test("item weight cant be negative", () => {
     () =>
       new Item({
         itemId: 1,
+        category: "test",
         description: "test",
         price: 20,
         weight: -1,

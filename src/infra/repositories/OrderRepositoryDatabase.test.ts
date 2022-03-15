@@ -22,11 +22,12 @@ test("save order using PostgreSQL", async () => {
   const order = new Order({
     cpf: "516.178.806-20",
     issueDate: new Date("2020-10-10T10:00:00"),
-    sequence: 1,
+    sequence: 2,
   });
   order.addItem({
     item: new Item({
       itemId: 1,
+      category: "test",
       description: "test",
       price: 10,
       width: 10,
@@ -37,15 +38,15 @@ test("save order using PostgreSQL", async () => {
     quantity: 1,
   });
   const savedOrderCode = await orderRepositoryDatabase.save(order);
-  expect(savedOrderCode.value).toBe("202000000001");
+  expect(savedOrderCode.value).toBe("202000000002");
 });
 
 test("count order using PostgreSQL", async () => {
   const count = await orderRepositoryDatabase.count();
-  expect(count).toBe(1);
+  expect(count).toBe(2);
 });
 
 test("get order list using PostgreSQL", async () => {
   const orders = await orderRepositoryDatabase.getList();
-  expect(orders).toHaveLength(1);
+  expect(orders).toHaveLength(2);
 });

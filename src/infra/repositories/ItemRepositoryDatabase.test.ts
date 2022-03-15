@@ -9,6 +9,7 @@ test("get item by id using PostgreSQL", async () => {
   const item = await itemRepositoryDatabase.getById(1);
   postgreSQLConnectionAdapter.close();
   expect(item?.itemId).toBe(1);
+  expect(item?.category).toBe("Instrumentos Musicais");
   expect(item?.description).toBe("Guitarra");
   expect(item?.price).toBe(1000);
   expect(item?.width).toBe(100);

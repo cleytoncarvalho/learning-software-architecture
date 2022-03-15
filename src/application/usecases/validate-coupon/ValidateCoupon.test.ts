@@ -9,8 +9,8 @@ const sut = () => {
 test("validate coupon", async () => {
   const validateCoupon = sut();
   const output = await validateCoupon.execute({
-    code: "VALE10",
-    currentDate: new Date("2022-02-20T10:00:00"),
+    code: "VALE20",
+    currentDate: new Date("2022-10-10T10:00:00"),
   });
   expect(output.isValid).toBe(true);
 });
@@ -18,8 +18,8 @@ test("validate coupon", async () => {
 test("validate coupon expired", async () => {
   const validateCoupon = sut();
   const output = await validateCoupon.execute({
-    code: "VALE30",
-    currentDate: new Date("2022-02-20T10:00:00"),
+    code: "VALE20_EXPIRED",
+    currentDate: new Date("2022-10-10T10:00:00"),
   });
   expect(output.isValid).toBe(false);
 });
