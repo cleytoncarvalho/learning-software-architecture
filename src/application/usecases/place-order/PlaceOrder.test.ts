@@ -1,13 +1,10 @@
-import { CouponRepositoryMemory } from "../../../infra/repositories/CouponRepositoryMemory";
-import { ItemRepositoryMemory } from "../../../infra/repositories/ItemRepositoryMemory";
-import { OrderRepositoryMemory } from "../../../infra/repositories/OrderRepositoryMemory";
+import { RepositoryMemoryFactory } from "../../../infra/repositories/RepositoryMemoryFactory";
 import { PlaceOrder } from "./PlaceOrder";
 
+const repositoryFactory = new RepositoryMemoryFactory();
+
 const sut = () => {
-  const orderRepository = new OrderRepositoryMemory();
-  const itemRepository = new ItemRepositoryMemory();
-  const couponRepository = new CouponRepositoryMemory();
-  return new PlaceOrder(orderRepository, itemRepository, couponRepository);
+  return new PlaceOrder(repositoryFactory);
 };
 
 test("place order and calculate code", async () => {
