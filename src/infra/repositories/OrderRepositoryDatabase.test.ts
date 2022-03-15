@@ -36,8 +36,8 @@ test("save order using PostgreSQL", async () => {
     }),
     quantity: 1,
   });
-  const savedOrder = await orderRepositoryDatabase.save(order);
-  expect(savedOrder).toBeUndefined();
+  const savedOrderCode = await orderRepositoryDatabase.save(order);
+  expect(savedOrderCode.value).toBe("202000000001");
 });
 
 test("count order using PostgreSQL", async () => {

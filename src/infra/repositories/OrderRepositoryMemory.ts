@@ -1,5 +1,6 @@
 import { OrderRepository } from "../../domain/repositories/OrderRepository";
 import { Order } from "../../domain/entities/order/Order";
+import { OrderCode } from "../../domain/entities/order/OrderCode";
 
 export class OrderRepositoryMemory implements OrderRepository {
   orders: Order[];
@@ -22,8 +23,9 @@ export class OrderRepositoryMemory implements OrderRepository {
     return this.orders;
   }
 
-  async save(order: Order): Promise<void> {
+  async save(order: Order): Promise<OrderCode> {
     this.orders.push(order);
+    return order.code;
   }
 
   async count(): Promise<number> {

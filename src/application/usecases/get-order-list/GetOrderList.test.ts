@@ -2,7 +2,7 @@ import { PostgreSQLConnectionAdapter } from "../../../infra/database/adapters/Po
 import { OrderRepositoryDatabase } from "../../../infra/repositories/OrderRepositoryDatabase";
 import { GetOrderList } from "./GetOrderList";
 
-test("get order list using", async () => {
+test("get order list", async () => {
   const postgresSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
   const orderRepositoryDatabase = new OrderRepositoryDatabase(
     postgresSQLConnectionAdapter

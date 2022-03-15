@@ -1,4 +1,5 @@
 import { Order } from "../../domain/entities/order/Order";
+import { OrderCode } from "../../domain/entities/order/OrderCode";
 import { OrderRepository } from "../../domain/repositories/OrderRepository";
 import { Connection } from "../database/Connection";
 
@@ -34,7 +35,7 @@ export class OrderRepositoryDatabase implements OrderRepository {
     return orders;
   }
 
-  async save(order: Order): Promise<void> {
+  async save(order: Order): Promise<OrderCode> {
     await this.connection.query(
       "insert into ccca.order (coupon,code,cpf,issue_date,freight,sequence,total) values ($1,$2,$3,$4,$5,$6,$7)",
       [
@@ -47,6 +48,8 @@ export class OrderRepositoryDatabase implements OrderRepository {
         order.total,
       ]
     );
+
+    return order.code;
   }
 
   async count(): Promise<number> {
