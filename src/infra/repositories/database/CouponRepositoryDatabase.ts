@@ -1,6 +1,6 @@
-import { Coupon } from "../../domain/entities/coupon/Coupon";
-import { CouponRepository } from "../../domain/repositories/CouponRepository";
-import { Connection } from "../database/Connection";
+import { Coupon } from "../../../domain/entities/coupon/Coupon";
+import { CouponRepository } from "../../../domain/repositories/CouponRepository";
+import { Connection } from "../../database/Connection";
 
 export class CouponRepositoryDatabase implements CouponRepository {
   constructor(readonly connection: Connection) {}

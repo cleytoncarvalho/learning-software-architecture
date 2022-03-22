@@ -1,7 +1,7 @@
-import { PostgreSQLConnectionAdapter } from "../../../infra/database/adapters/PostgreSQLConnectionAdapter";
-import { RepositoryDatabaseFactory } from "../../../infra/repositories/database/RepositoryDatabaseFactory";
-import { PlaceOrder } from "../place-order/PlaceOrder";
-import { GetOrderByCode } from "./GetOrderByCode";
+import axios from "axios";
+import { PlaceOrder } from "../../application/usecases/place-order/PlaceOrder";
+import { PostgreSQLConnectionAdapter } from "../database/adapters/PostgreSQLConnectionAdapter";
+import { RepositoryDatabaseFactory } from "../repositories/database/RepositoryDatabaseFactory";
 
 const postgreSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
 const repositoryFactory = new RepositoryDatabaseFactory(
@@ -13,9 +13,9 @@ beforeEach(async () => {
   await orderRepository.clean();
 });
 
-test("get order by code", async () => {
+test("get order list", async () => {
   const placeOrder = new PlaceOrder(repositoryFactory);
-  await placeOrder.execute({
+  const input = {
     issueDate: new Date("2019-03-09T10:00:00"),
     cpf: "516.178.806-20",
     orderItems: [
@@ -23,10 +23,12 @@ test("get order by code", async () => {
       { itemId: 3, quantity: 2 },
     ],
     coupon: "VALE20",
-  });
-  const getOrderByCode = new GetOrderByCode(orderRepository);
-  const order = await getOrderByCode.execute({ code: "201900000001" });
-  expect(order.code).toBe("201900000001");
+  };
+  await placeOrder.execute(input);
+  await placeOrder.execute(input);
+  await placeOrder.execute(input);
+  const result = await axios.get("http://localhost:3000/orders");
+  expect(result.data).toHaveLength(3);
 });
 
 afterAll(async () => {

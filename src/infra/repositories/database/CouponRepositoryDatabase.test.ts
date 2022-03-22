@@ -1,4 +1,4 @@
-import { PostgreSQLConnectionAdapter } from "../database/adapters/PostgreSQLConnectionAdapter";
+import { PostgreSQLConnectionAdapter } from "../../database/adapters/PostgreSQLConnectionAdapter";
 import { CouponRepositoryDatabase } from "./CouponRepositoryDatabase";
 
 test("get coupon by code using PostgreSQL", async () => {

@@ -1,4 +1,4 @@
-import { PostgreSQLConnectionAdapter } from "../database/adapters/PostgreSQLConnectionAdapter";
+import { PostgreSQLConnectionAdapter } from "../../database/adapters/PostgreSQLConnectionAdapter";
 import { ItemRepositoryDatabase } from "./ItemRepositoryDatabase";
 
 test("get item by id using PostgreSQL", async () => {

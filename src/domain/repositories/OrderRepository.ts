@@ -6,4 +6,5 @@ export interface OrderRepository {
   getList(): Promise<Order[]>;
   save(order: Order): Promise<OrderCode>;
   count(): Promise<number>;
+  clean(): Promise<void>;
 }

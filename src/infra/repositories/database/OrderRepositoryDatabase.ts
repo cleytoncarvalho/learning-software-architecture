@@ -1,16 +1,17 @@
-import { Order } from "../../domain/entities/order/Order";
-import { OrderCode } from "../../domain/entities/order/OrderCode";
-import { OrderRepository } from "../../domain/repositories/OrderRepository";
-import { Connection } from "../database/Connection";
+import { Order } from "../../../domain/entities/order/Order";
+import { OrderCode } from "../../../domain/entities/order/OrderCode";
+import { OrderRepository } from "../../../domain/repositories/OrderRepository";
+import { Connection } from "../../database/Connection";
 
 export class OrderRepositoryDatabase implements OrderRepository {
-  constructor(readonly connection: Connection) {}
+  constructor(private readonly connection: Connection) {}
 
   async getByCode(code: string): Promise<Order | undefined> {
     const [result] = await this.connection.query(
       "select * from ccca.order where code = $1",
       [code]
     );
+    if (!result) throw new Error("Order not found");
     return new Order({
       cpf: result.cpf,
       issueDate: result.issue_date,
@@ -58,5 +59,10 @@ export class OrderRepositoryDatabase implements OrderRepository {
       []
     );
     return parseInt(result.counter);
+  }
+
+  async clean(): Promise<void> {
+    await this.connection.query("delete from ccca.order_item", []);
+    await this.connection.query("delete from ccca.order", []);
   }
 }

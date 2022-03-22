@@ -1,7 +1,7 @@
-import { Item } from "../../domain/entities/item/Item";
-import { Order } from "../../domain/entities/order/Order";
-import { OrderRepository } from "../../domain/repositories/OrderRepository";
-import { PostgreSQLConnectionAdapter } from "../database/adapters/PostgreSQLConnectionAdapter";
+import { Item } from "../../../domain/entities/item/Item";
+import { Order } from "../../../domain/entities/order/Order";
+import { OrderRepository } from "../../../domain/repositories/OrderRepository";
+import { PostgreSQLConnectionAdapter } from "../../database/adapters/PostgreSQLConnectionAdapter";
 import { OrderRepositoryDatabase } from "./OrderRepositoryDatabase";
 
 let postgreSQLConnectionAdapter: PostgreSQLConnectionAdapter;

@@ -1,14 +1,19 @@
-import { RepositoryMemoryFactory } from "../../../infra/repositories/RepositoryMemoryFactory";
+import { PostgreSQLConnectionAdapter } from "../../../infra/database/adapters/PostgreSQLConnectionAdapter";
+import { RepositoryDatabaseFactory } from "../../../infra/repositories/database/RepositoryDatabaseFactory";
 import { PlaceOrder } from "./PlaceOrder";
 
-const repositoryFactory = new RepositoryMemoryFactory();
+const postgreSQLConnectionAdapter = new PostgreSQLConnectionAdapter();
+const repositoryFactory = new RepositoryDatabaseFactory(
+  postgreSQLConnectionAdapter
+);
+const orderRepository = repositoryFactory.createOrderRepository();
 
-const sut = () => {
-  return new PlaceOrder(repositoryFactory);
-};
+beforeEach(async () => {
+  await orderRepository.clean();
+});
 
 test("place order and calculate code", async () => {
-  const placeOrder = sut();
+  const placeOrder = new PlaceOrder(repositoryFactory);
   const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
@@ -18,11 +23,11 @@ test("place order and calculate code", async () => {
     ],
     coupon: "VALE20",
   });
-  expect(output.code).toBe("202100000002");
+  expect(output.code).toBe("202100000001");
 });
 
 test("place order and calculate total", async () => {
-  const placeOrder = sut();
+  const placeOrder = new PlaceOrder(repositoryFactory);
   const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
@@ -35,7 +40,7 @@ test("place order and calculate total", async () => {
 });
 
 test("place order with coupon", async () => {
-  const placeOrder = sut();
+  const placeOrder = new PlaceOrder(repositoryFactory);
   const output = await placeOrder.execute({
     issueDate: new Date("2021-03-09T10:00:00"),
     cpf: "516.178.806-20",
@@ -51,7 +56,8 @@ test("place order with coupon", async () => {
 test("cant place order with repeated item", async () => {
   expect.assertions(1);
   try {
-    await sut().execute({
+    const placeOrder = new PlaceOrder(repositoryFactory);
+    await placeOrder.execute({
       issueDate: new Date("2021-03-09T10:00:00"),
       cpf: "516.178.806-20",
       orderItems: [
@@ -63,4 +69,8 @@ test("cant place order with repeated item", async () => {
   } catch (error) {
     expect(error).toBeTruthy();
   }
+});
+
+afterAll(async () => {
+  await postgreSQLConnectionAdapter.close();
 });
