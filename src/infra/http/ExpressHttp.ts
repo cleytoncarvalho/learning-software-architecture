@@ -6,6 +6,7 @@ export class ExpressHttp implements Http {
 
   constructor() {
     this.app = express();
+    this.app.use(express.json());
   }
 
   async route(method: string, url: string, callback: any): Promise<any> {

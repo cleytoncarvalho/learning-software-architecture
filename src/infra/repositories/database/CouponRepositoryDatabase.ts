@@ -10,7 +10,7 @@ export class CouponRepositoryDatabase implements CouponRepository {
       "select * from ccca.coupon where code = $1",
       [code]
     );
-
+    if (!coupon) throw new Error(`Coupon not found: ${code}`);
     return new Coupon({
       code: coupon.code,
       percentage: parseInt(coupon.percentage),
