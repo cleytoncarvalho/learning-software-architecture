@@ -14,5 +14,11 @@ export class Router {
       const output = ordersController.getOrders();
       return output;
     });
+    this.http.route("get", "/orders/:code", async (params: any, body: any) => {
+      console.log(params);
+      const ordersController = new OrdersController(this.repositoryFactory);
+      const output = ordersController.getOrder(params.code);
+      return output;
+    });
   }
 }
